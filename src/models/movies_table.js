@@ -10,7 +10,10 @@ const Movie= sequelize.define('movie',{
     movie_name: {
         type: Datatypes.STRING(100),
         allowNull:false
-    } 
+    } ,
+    theatre_id:{
+      type: Datatypes.INTEGER
+    }
 } )
 
 
@@ -30,11 +33,26 @@ const Showtime = sequelize.define('Showtime', {
     }
   })
 
+const Theatre= sequelize.define('Theatres',{
+  theatre_id:{
+    type: Datatypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  theatre_name: {
+    type: Datatypes.STRING(100),
+    allowNull: false
+  }
+})
+
 Movie.hasMany(Showtime);
+Movie.hasMany(Theatre);
 Showtime.belongsTo(Movie);
+Theatre.hasMany(Movie);
+
 
 sequelize.sync()
 
 module.exports={
-    Movie,Showtime
+    Movie,Showtime,Theatre
 }

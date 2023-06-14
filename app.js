@@ -6,6 +6,7 @@ const bodyParser=require('body-parser')
 const app= express()
 const routes= express.Router()
 const movieInfo= require('./src/routers/movies')
+const data_init=require('./src/helpers/dataInsert')
 
 const PORT=3000
 app.use(bodyParser.json())
@@ -19,10 +20,12 @@ routes.get('/',(req,res)=>{
     res.status(200).send('Welcome')
 })
 
-routes.use('/movies',movieInfo)
+routes.use('/',movieInfo)
+
 
 
 app.listen(PORT,async ()=>{
     console.log('Server is running at 3000')
     await connecttoDB()
+   await data_init()
 })
